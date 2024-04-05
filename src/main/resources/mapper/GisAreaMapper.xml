@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.one.pojian.mapper.GisAreaMapper">
+    <select id="getChinaArea" resultType="java.util.Map">
+        SELECT
+            x.id,
+            x.name,
+            x.code,
+            x.typename,
+            x.classcode,
+            x.province_code,
+            x.province_name,
+            x.eng_name,
+            x.var_name,
+            x.eng_typename,
+            ST_AsText(x.geo,'axis-order=long-lat') as geo
+        FROM gis_area x
+        where
+            x.classcode=1
+    </select>
+    <update id="updateGeoById">
+        UPDATE gis_area
+        SET geo = ST_GeomFromText(#{geo},4326,'axis-order=long-lat')
+        WHERE id = #{id}
+    </update>
+</mapper>
