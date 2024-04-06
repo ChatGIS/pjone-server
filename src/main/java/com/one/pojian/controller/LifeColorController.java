@@ -1,7 +1,7 @@
 package com.one.pojian.controller;
 
-import com.one.pojian.entity.po.LifeMH;
-import com.one.pojian.mapper.LifeMHMapper;
+import com.one.pojian.entity.po.LifeColor;
+import com.one.pojian.mapper.LifeColorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,13 +17,13 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/lifeMH")
-public class LifeMHController {
+public class LifeColorController {
     @Autowired
-    private LifeMHMapper lifeMHMapper;
+    private LifeColorMapper lifeMHMapper;
 
     @RequestMapping("/getLifeMHInfos")
-    public List<LifeMH> getLifeMHInfos() {
-        List<LifeMH> lifeMHs = lifeMHMapper.selectList(null);
+    public List<LifeColor> getLifeMHInfos() {
+        List<LifeColor> lifeMHs = lifeMHMapper.selectList(null);
         return lifeMHs;
     }
 }

@@ -13,8 +13,8 @@ import java.sql.Date;
  * @version: $
  */
 @Data
-@TableName("Life_MH")
-public class LifeMH {
+@TableName("life_color")
+public class LifeColor {
     private Long id;
     private Integer num;
     private String type;
