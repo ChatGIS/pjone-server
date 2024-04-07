@@ -1,7 +1,7 @@
 package com.one.pojian.controller;
 
-import com.one.pojian.entity.po.LifeColor;
-import com.one.pojian.mapper.LifeColorMapper;
+import com.one.pojian.entity.base.Result;
+import com.one.pojian.service.LifeColorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,14 +16,14 @@ import java.util.List;
  * @version: $
  */
 @RestController
-@RequestMapping("/lifeMH")
+@RequestMapping("/lifeColor")
 public class LifeColorController {
     @Autowired
-    private LifeColorMapper lifeMHMapper;
+    private LifeColorService lifeColorService;
 
-    @RequestMapping("/getLifeMHInfos")
-    public List<LifeColor> getLifeMHInfos() {
-        List<LifeColor> lifeMHs = lifeMHMapper.selectList(null);
-        return lifeMHs;
+    @RequestMapping("/getRecordsNum")
+    public Result getRecordsNum() {
+        List<List> records = lifeColorService.listRecordNum();
+        return Result.success(records);
     }
 }
