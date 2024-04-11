@@ -1,5 +1,7 @@
 server:
   port: 1304
+  servlet:
+    context-path: /pjone-server
 #数据库配置
 spring:
   datasource:
