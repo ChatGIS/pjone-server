@@ -1,6 +1,7 @@
 package com.one.pojian.controller;
 
 import com.one.pojian.service.GisAreaService;
+import org.locationtech.jts.io.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +20,7 @@ public class GisAreaController {
     private GisAreaService gisAreaService;
 
     @RequestMapping("/getChinaArea")
-    public List<Map> getChinaArea() {
+    public List<Map> getChinaArea() throws ParseException {
         return gisAreaService.getChinaArea();
     }
 }
