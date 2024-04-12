@@ -13,22 +13,32 @@ public class Result {
     private Object data;
     private Long timeStamp;
 
-    public Result() {}
-
-    public static Result success() {
+    public static Result initResult(ResultCode resultCode) {
         Result result = new Result();
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
+        result.setCode(resultCode.getCode());
+        result.setMessage(resultCode.getMessage());
         result.setTimeStamp(System.currentTimeMillis());
         return result;
     }
 
+    public static Result success() {
+        Result result = Result.initResult(ResultCode.SUCCESS);
+        return result;
+    }
+
     public static Result success(Object data) {
-        Result result = new Result();
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        result.setTimeStamp(System.currentTimeMillis());
+        Result result = Result.initResult(ResultCode.SUCCESS);
         result.setData(data);
+        return result;
+    }
+
+    public static Result fail() {
+        Result result = Result.initResult(ResultCode.FAILURE);
+        return result;
+    }
+
+    public static Result fail(ResultCode resultCode) {
+        Result result = Result.initResult(resultCode);
         return result;
     }
 }
