@@ -1,5 +1,7 @@
 package com.one.pojian.controller;
 
+import com.one.pojian.entity.base.Result;
+import com.one.pojian.entity.base.ResultCode;
 import com.one.pojian.entity.po.Book;
 import com.one.pojian.mapper.BookMapper;
 import jakarta.annotation.Resource;
@@ -35,5 +37,13 @@ public class BookController {
     @RequestMapping("/selectBook")
     public List<Map> selectBook() {
         return bookMapper.selectBook();
+    }
+    @RequestMapping("/testSuccess")
+    public Result testSuccess() {
+        return Result.success();
+    }
+    @RequestMapping("/testFail")
+    public Result testFail() {
+        return Result.fail(ResultCode.EMPTY_PARAM);
     }
 }
