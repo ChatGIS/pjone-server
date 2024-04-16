@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.one.pojian.mapper.AuthorMapper">
+    <select id="getAuthorMap" resultType="java.util.Map">
+        SELECT *
+        FROM author
+        LIMIT 1
+    </select>
+    <select id="getAuthorHashMap" resultType="java.util.HashMap">
+        SELECT *
+        FROM author
+        LIMIT 1
+    </select>
+    <select id="getAuthorLinkedHashMap" resultType="java.util.LinkedHashMap">
+        SELECT *
+        FROM author
+        LIMIT 1
+    </select>
+</mapper>
