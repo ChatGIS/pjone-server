@@ -33,9 +33,6 @@ public class LifeColorServiceImpl extends ServiceImpl<LifeColorMapper, LifeColor
             record.add(listRecords.get(i).getNum());
             records.add(record);
         }
-        System.out.println(records);
-
-
         return records;
     }
 }
