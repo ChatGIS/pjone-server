@@ -10,9 +10,7 @@ import com.one.pojian.service.SayingService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @description：语录实现类
@@ -38,5 +36,15 @@ public class AuthorServiceImpl extends ServiceImpl<AuthorMapper, Author> impleme
     public LinkedHashMap getAuthorLinkedHashMap() {
         LinkedHashMap author = authorMapper.getAuthorLinkedHashMap();
         return author;
+    }
+    @Override
+    public List<Map> getAuthorArrayListMap() {
+        List<Map> authors = authorMapper.getAuthorArrayListMap();
+        return authors;
+    }
+    @Override
+    public LinkedList<Map> getAuthorLinkedListMap() {
+        LinkedList<Map> authors = authorMapper.getAuthorLinkedListMap();
+        return authors;
     }
 }

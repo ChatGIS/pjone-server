@@ -16,4 +16,14 @@
         FROM author
         LIMIT 1
     </select>
+    <select id="getAuthorArrayListMap" resultType="java.util.Map">
+        SELECT *
+        FROM author
+         LIMIT 2
+    </select>
+    <select id="getAuthorLinkedListMap" resultType="java.util.Map">
+        SELECT *
+        FROM author
+--         LIMIT 2
+    </select>
 </mapper>

@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @description：作者
@@ -34,6 +32,16 @@ public class AuthorController {
     @RequestMapping("/getAuthorLinkedHashMap")
     public Result getAuthorLinkedHashMap() {
         LinkedHashMap authorMap = authorService.getAuthorLinkedHashMap();
+        return Result.success(authorMap);
+    }
+    @RequestMapping("/getAuthorArrayListMap")
+    public Result getAuthorArrayListMap() {
+        List<Map> authorMap = authorService.getAuthorArrayListMap();
+        return Result.success(authorMap);
+    }
+    @RequestMapping("/getAuthorLinkedListMap")
+    public Result getAuthorLinkedListMap() {
+        LinkedList<Map> authorMap = authorService.getAuthorLinkedListMap();
         return Result.success(authorMap);
     }
 }
