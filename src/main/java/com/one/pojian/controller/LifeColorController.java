@@ -1,6 +1,7 @@
 package com.one.pojian.controller;
 
 import com.one.pojian.entity.base.Result;
+import com.one.pojian.entity.po.LifeColor;
 import com.one.pojian.service.LifeColorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,11 @@ import java.util.List;
 public class LifeColorController {
     @Autowired
     private LifeColorService lifeColorService;
-
+    @RequestMapping("/getLifeColorList")
+    public Result getLifeColorList() {
+        List<LifeColor> lifeColorList = lifeColorService.getLifeColorList();
+        return  Result.success(lifeColorList);
+    }
     @RequestMapping("/getRecordsNum")
     public Result getRecordsNum() {
         List<List> records = lifeColorService.listRecordNum();

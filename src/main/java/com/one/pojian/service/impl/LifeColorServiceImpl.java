@@ -20,6 +20,13 @@ public class LifeColorServiceImpl extends ServiceImpl<LifeColorMapper, LifeColor
     private LifeColorMapper lifeColorMapper;
 
     @Override
+    public List<LifeColor> getLifeColorList() {
+        QueryWrapper<LifeColor> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("id");
+        queryWrapper.last("limit 10");
+        return list(queryWrapper);
+    }
+    @Override
     public List<List> listRecordNum() {
         List records = new ArrayList<>();
 
