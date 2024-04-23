@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface LifeColorService {
     List<LifeColor> getLifeColorList();
+    int addLifeColor(LifeColor lifeColor);
     List<List> listRecordNum();
 }
