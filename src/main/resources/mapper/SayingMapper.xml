@@ -7,9 +7,10 @@
         ORDER BY RAND() LIMIT 1
     </select>
     <select id="getCountEveryDay" resultType="hashmap">
-        SELECT DATE_FORMAT(s.create_date, '%Y-%m-%d') AS date, COUNT(*) AS count
-        FROM saying s
-        GROUP BY s.create_date
-        ORDER BY s.create_date
+        SELECT a.date, COUNT(a.date) AS count  FROM (
+            SELECT DATE_FORMAT(s.create_date, '%Y-%m-%d') AS date
+            FROM saying s) a
+        GROUP BY a.date
+        ORDER BY a.date
     </select>
 </mapper>
