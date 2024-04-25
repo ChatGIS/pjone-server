@@ -22,6 +22,11 @@ public class SayingServiceImpl extends ServiceImpl<SayingMapper, Saying> impleme
     private SayingMapper sayingMapper;
 
     @Override
+    public int addSaying(Saying saying) {
+        int num = sayingMapper.insert(saying);
+        return num;
+    }
+    @Override
     public Saying getRandomSaying() {
         Saying saying = sayingMapper.getRandomSaying();
         return saying;
