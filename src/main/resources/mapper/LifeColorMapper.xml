@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.one.pojian.mapper.LifeColorMapper">
+    <select id="getMinuteLastYear" resultType="hashmap">
+        SELECT lc.`type` , sum(lc.`minute`) AS total_minute FROM life_color lc
+        WHERE lc.do_date > date_sub(now(), interval 1 year)
+        GROUP BY lc.`type`
+    </select>
+</mapper>
