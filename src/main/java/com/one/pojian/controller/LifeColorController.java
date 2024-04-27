@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -23,11 +24,17 @@ import java.util.List;
 public class LifeColorController {
     @Autowired
     private LifeColorService lifeColorService;
+
     @RequestMapping("/getLifeColorList")
     public Result getLifeColorList() {
         List<LifeColor> lifeColorList = lifeColorService.getLifeColorList();
         return  Result.success(lifeColorList);
     }
+    @RequestMapping("/getMinuteLastYear")
+    public Result getMinuteLastYear() {
+        List<HashMap> list = lifeColorService.getMinuteLastYear();
+        return Result.success(list);
+    };
     @RequestMapping("addLifeColor")
     public Result addLifeColor(@RequestBody LifeColor lifeColor) {
         int num = lifeColorService.addLifeColor(lifeColor);

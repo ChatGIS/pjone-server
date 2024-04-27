@@ -26,6 +26,13 @@ public class LifeColorServiceImpl extends ServiceImpl<LifeColorMapper, LifeColor
         queryWrapper.last("limit 10");
         return list(queryWrapper);
     }
+
+    @Override
+    public List<HashMap> getMinuteLastYear() {
+        List<HashMap> list = lifeColorMapper.getMinuteLastYear();
+        return list;
+    }
+
     @Override
     public int addLifeColor(LifeColor lifeColor) {
         int num = lifeColorMapper.insert(lifeColor);
