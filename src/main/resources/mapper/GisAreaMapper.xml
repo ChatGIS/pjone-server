@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.one.pojian.mapper.GisAreaMapper">
+    <insert id="addArea">
+        insert into gis_area (name, code, typename, classcode, geo, remark) values (
+         #{name}, #{code}, #{typename}, #{classcode},
+            ST_GeomFromText(#{geo},4326,'axis-order=long-lat'), #{remark}
+            )
+    </insert>
     <select id="getChinaArea" resultType="java.util.Map">
         SELECT
             x.id,

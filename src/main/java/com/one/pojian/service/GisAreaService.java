@@ -8,5 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface GisAreaService extends IService<GisArea> {
+    int addArea(GisArea gisArea);
     List<Map> getChinaArea() throws ParseException;
 }

@@ -32,6 +32,13 @@ public class GisAreaServiceImpl extends ServiceImpl<GisAreaMapper, GisArea> impl
     @Resource
     private GisAreaMapper gisAreaMapper;
 
+
+    @Override
+    public int addArea(GisArea gisArea) {
+        int num = gisAreaMapper.addArea(gisArea);
+        return num;
+    }
+
     @Override
     public List<Map> getChinaArea() throws ParseException {
         List<Map> listMap = new ArrayList<>();

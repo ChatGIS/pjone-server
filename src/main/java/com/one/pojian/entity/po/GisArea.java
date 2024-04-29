@@ -90,4 +90,5 @@ public class GisArea {
      * 空间坐标
      */
     private String geo;
+    private String remark;
 }
