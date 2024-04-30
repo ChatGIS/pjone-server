@@ -10,7 +10,7 @@ import java.util.Map;
 
 public interface GisAreaMapper extends BaseMapper<GisArea> {
     int addArea(GisArea gisArea);
-
+    List<GisArea> getProvince();
     @MapKey("id")
     List<Map> getChinaArea();
 

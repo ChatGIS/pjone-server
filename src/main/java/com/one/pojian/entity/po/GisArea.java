@@ -91,4 +91,5 @@ public class GisArea {
      */
     private String geo;
     private String remark;
+
 }

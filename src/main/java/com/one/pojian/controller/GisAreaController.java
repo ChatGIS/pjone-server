@@ -22,10 +22,24 @@ public class GisAreaController {
     @Autowired
     private GisAreaService gisAreaService;
 
+    /**
+     * 爬取天地图的行政区划数据
+     * @return
+     */
+    @RequestMapping("crawlAreaOfTDT")
+    public Result crawlAreaOfTDT() {
+        int num = gisAreaService.crawlAreaOfTDT();
+        return Result.success(num);
+    }
     @RequestMapping("/addArea")
     public Result addArea(@RequestBody GisArea gisArea) {
         int num = gisAreaService.addArea(gisArea);
         return Result.success(num);
+    }
+    @RequestMapping("getProvince")
+    public Result getProvince() {
+        List<GisArea> gisAreaList = gisAreaService.getProvince();
+        return Result.success(gisAreaList);
     }
     @RequestMapping("/getChinaArea")
     public List<Map> getChinaArea() throws ParseException {

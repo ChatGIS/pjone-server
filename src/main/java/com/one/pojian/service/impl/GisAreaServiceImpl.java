@@ -1,8 +1,10 @@
 package com.one.pojian.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.one.pojian.entity.dto.AreaTDT;
 import com.one.pojian.entity.po.GisArea;
 import com.one.pojian.mapper.GisAreaMapper;
+import com.one.pojian.mapper.GisAreaTDTMapper;
 import com.one.pojian.service.GisAreaService;
 import jakarta.annotation.Resource;
 import org.locationtech.jts.geom.Coordinate;
@@ -10,11 +12,13 @@ import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -31,12 +35,31 @@ public class GisAreaServiceImpl extends ServiceImpl<GisAreaMapper, GisArea> impl
 
     @Resource
     private GisAreaMapper gisAreaMapper;
+    @Resource
+    private GisAreaTDTMapper gisAreaTDTMapper;
 
+
+    @Override
+    public int crawlAreaOfTDT() {
+        RestTemplate restTemplate = new RestTemplate();
+        AreaTDT areaTDT = restTemplate.getForObject("http://api.tianditu.gov.cn/v2/administrative?keyword=156110000&childLevel=0&extensions=true&tk=9d87b18d094142a45cdd21155fad05c0",
+                AreaTDT.class);
+        String geo = areaTDT.getData().getDistrict().getBoundary();
+        BigDecimal lng = areaTDT.getData().getDistrict().getCenter().getLng();
+        BigDecimal lat = areaTDT.getData().getDistrict().getCenter().getLat();
+        int num = gisAreaTDTMapper.updateGeoById("156110000", geo, lng, lat);
+        return num;
+    }
 
     @Override
     public int addArea(GisArea gisArea) {
         int num = gisAreaMapper.addArea(gisArea);
         return num;
+    }
+
+    @Override
+    public List<GisArea> getProvince() {
+        return gisAreaMapper.getProvince();
     }
 
     @Override

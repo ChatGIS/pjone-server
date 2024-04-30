@@ -7,6 +7,12 @@
             ST_GeomFromText(#{geo},4326,'axis-order=long-lat'), #{remark}
             )
     </insert>
+    <select id="getProvince" resultType="hashmap">
+        select ga.id, ga.name, ga.code, ga.typename, ga.classcode, ST_AsText(ga.geo,'axis-order=long-lat') as geo
+        from gis_area ga
+--         where ga.classcode = 1 and ga.remark = 'TDT'
+        where ga.classcode = 1 and ga.remark is null
+    </select>
     <select id="getChinaArea" resultType="java.util.Map">
         SELECT
             x.id,
