@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,8 +38,8 @@ public class GisAreaController {
         return Result.success(num);
     }
     @RequestMapping("getProvince")
-    public Result getProvince() {
-        List<GisArea> gisAreaList = gisAreaService.getProvince();
+    public Result getProvince(String type) {
+        List<HashMap> gisAreaList = gisAreaService.getProvince(type);
         return Result.success(gisAreaList);
     }
     @RequestMapping("/getChinaArea")

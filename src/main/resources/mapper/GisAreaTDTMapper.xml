@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.one.pojian.mapper.GisAreaTDTMapper">
+    <select id="getArea" resultType="com.one.pojian.entity.po.GisAreaTDT">
+        select ga.id, ga.name, ga.code, ga.typename, ga.classcode, ST_AsText(ga.geo,'axis-order=long-lat') as geo
+        from gis_area_tdt ga
+        where ga.id > 34 and ga.id &lt; 40
+    </select>
+    <select id="getProvince" resultType="hashmap">
+        select ga.id, ga.name, ga.code, ga.typename, ga.classcode, ST_AsText(ga.geo,'axis-order=long-lat') as geo
+        from gis_area_tdt ga
+        where ga.classcode = 1
+    </select>
     <update id="updateGeoById">
         UPDATE gis_area_tdt
         SET lng = #{lng}, lat = #{lat}, geo = ST_GeomFromText(#{geo},4326,'axis-order=long-lat')

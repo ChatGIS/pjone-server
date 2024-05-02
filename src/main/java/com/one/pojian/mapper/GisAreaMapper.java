@@ -5,12 +5,13 @@ import com.one.pojian.entity.po.GisArea;
 import org.apache.ibatis.annotations.MapKey;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public interface GisAreaMapper extends BaseMapper<GisArea> {
     int addArea(GisArea gisArea);
-    List<GisArea> getProvince();
+    List<HashMap> getProvince();
     @MapKey("id")
     List<Map> getChinaArea();
 
