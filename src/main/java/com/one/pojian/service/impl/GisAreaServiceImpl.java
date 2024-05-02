@@ -3,6 +3,7 @@ package com.one.pojian.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.one.pojian.entity.dto.AreaTDT;
 import com.one.pojian.entity.po.GisArea;
+import com.one.pojian.entity.po.GisAreaTDT;
 import com.one.pojian.mapper.GisAreaMapper;
 import com.one.pojian.mapper.GisAreaTDTMapper;
 import com.one.pojian.service.GisAreaService;
@@ -22,6 +23,7 @@ import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -41,14 +43,23 @@ public class GisAreaServiceImpl extends ServiceImpl<GisAreaMapper, GisArea> impl
 
     @Override
     public int crawlAreaOfTDT() {
+        int total = 0;
         RestTemplate restTemplate = new RestTemplate();
-        AreaTDT areaTDT = restTemplate.getForObject("http://api.tianditu.gov.cn/v2/administrative?keyword=156110000&childLevel=0&extensions=true&tk=9d87b18d094142a45cdd21155fad05c0",
-                AreaTDT.class);
-        String geo = areaTDT.getData().getDistrict().getBoundary();
-        BigDecimal lng = areaTDT.getData().getDistrict().getCenter().getLng();
-        BigDecimal lat = areaTDT.getData().getDistrict().getCenter().getLat();
-        int num = gisAreaTDTMapper.updateGeoById("156110000", geo, lng, lat);
-        return num;
+        List<GisAreaTDT> gisAreaTDTList = gisAreaTDTMapper.getArea();
+        System.out.println(gisAreaTDTList.size()+"SSSSSSSSSSSSSSSSSSSSSSS");
+        for (int i = 0; i < gisAreaTDTList.size(); i++) {
+            String code = gisAreaTDTList.get(i).getCode();
+            AreaTDT areaTDT = restTemplate.getForObject("http://api.tianditu.gov.cn/v2/administrative?keyword=" + code +"&childLevel=0&extensions=true&tk=9d87b18d094142a45cdd21155fad05c0",
+                    AreaTDT.class);
+            String geo = areaTDT.getData().getDistrict().getBoundary();
+            BigDecimal lng = areaTDT.getData().getDistrict().getCenter().getLng();
+            BigDecimal lat = areaTDT.getData().getDistrict().getCenter().getLat();
+            int num = 0;
+            num = gisAreaTDTMapper.updateGeoById(code, geo, lng, lat);
+            System.out.println(num + "nummmmmmmmmmmmmmmmmmmmmmmmmmm");
+            total += num;
+        }
+        return total;
     }
 
     @Override
@@ -58,8 +69,12 @@ public class GisAreaServiceImpl extends ServiceImpl<GisAreaMapper, GisArea> impl
     }
 
     @Override
-    public List<GisArea> getProvince() {
-        return gisAreaMapper.getProvince();
+    public List<HashMap> getProvince(String type) {
+        if("TDT".equals(type)) {
+            return gisAreaTDTMapper.getProvince();
+        } else {
+            return gisAreaMapper.getProvince();
+        }
     }
 
     @Override
