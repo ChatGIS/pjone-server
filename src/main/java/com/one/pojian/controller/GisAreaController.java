@@ -24,6 +24,18 @@ public class GisAreaController {
     private GisAreaService gisAreaService;
 
     /**
+     * 根据编码、层级、类型获取行政区划
+     * @param code  父级编码
+     * @param level  层级
+     * @param type  类型
+     * @return
+     */
+    @RequestMapping("/getAreaByLevelAndCode")
+    public Result getAreaByLevelAndCode(String code, int level, String type) {
+        List<HashMap> areaList = gisAreaService.getAreaByLevelAndCode(code, level, type);
+        return Result.success(areaList);
+    }
+    /**
      * 爬取天地图的行政区划数据
      * @return
      */

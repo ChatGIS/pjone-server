@@ -12,6 +12,21 @@
         from gis_area ga
         where ga.classcode = 1 and ga.remark is null
     </select>
+    <select id="getCity" resultType="hashmap">
+        select ga.id, ga.name, ga.code, ga.typename, ga.classcode, ST_AsText(ga.geo,'axis-order=long-lat') as geo
+        from gis_area ga
+        where ga.classcode = 2 and ga.province_code = #{code}
+    </select>
+    <select id="getRegion" resultType="hashmap">
+        select ga.id, ga.name, ga.code, ga.typename, ga.classcode, ST_AsText(ga.geo,'axis-order=long-lat') as geo
+        from gis_area ga
+        where ga.classcode = 3 and ga.city_code = #{code}
+    </select>
+    <select id="getTown" resultType="hashmap">
+        select ga.id, ga.name, ga.code, ga.typename, ga.classcode, ST_AsText(ga.geo,'axis-order=long-lat') as geo
+        from gis_area ga
+        where ga.classcode = 4 and ga.region_code = #{code}
+    </select>
     <select id="getChinaArea" resultType="java.util.Map">
         SELECT
             x.id,

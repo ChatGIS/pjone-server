@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface GisAreaService extends IService<GisArea> {
+    List<HashMap> getAreaByLevelAndCode(String code, int level, String type);
     int crawlAreaOfTDT();
     int addArea(GisArea gisArea);
     List<HashMap> getProvince(String type);

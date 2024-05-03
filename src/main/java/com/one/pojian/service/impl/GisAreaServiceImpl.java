@@ -42,6 +42,36 @@ public class GisAreaServiceImpl extends ServiceImpl<GisAreaMapper, GisArea> impl
 
 
     @Override
+    public List<HashMap> getAreaByLevelAndCode(String code, int level, String type) {
+        if(level == 1) {
+            if("TDT".equals(type)) {
+                return gisAreaTDTMapper.getProvince();
+            } else {
+                return gisAreaMapper.getProvince();
+            }
+        } else if(level == 2) {
+            if("TDT".equals(type)) {
+                return gisAreaTDTMapper.getCity(code);
+            } else {
+                return gisAreaMapper.getCity(code);
+            }
+        } else if(level == 3) {
+            if("TDT".equals(type)) {
+                return gisAreaTDTMapper.getRegion(code);
+            } else {
+                return gisAreaMapper.getRegion(code);
+            }
+        } else if(level == 4) {
+            if("TDT".equals(type)) {
+                return gisAreaTDTMapper.getTown(code);
+            } else {
+                return gisAreaMapper.getTown(code);
+            }
+        }
+        return null;
+    }
+
+    @Override
     public int crawlAreaOfTDT() {
         int total = 0;
         RestTemplate restTemplate = new RestTemplate();
