@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 @Data
 public class AreaTDT {
-    private String status;
+    private int status;
     private String message;
     private DataRes data;
 
