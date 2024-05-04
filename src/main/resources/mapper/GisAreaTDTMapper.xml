@@ -4,7 +4,7 @@
     <select id="getArea" resultType="com.one.pojian.entity.po.GisAreaTDT">
         select gat.id, gat.name, gat.code, gat.typename, gat.classcode, ST_AsText(gat.geo,'axis-order=long-lat') as geo
         from gis_area_tdt gat
-        where gat.id > 34 and gat.id &lt; 40
+        where gat.id >= 184 and gat.id &lt;= 184
     </select>
     <select id="getProvince" resultType="hashmap">
         select gat.id, gat.name, gat.code, gat.typename, gat.classcode, ST_AsText(gat.geo,'axis-order=long-lat') as geo

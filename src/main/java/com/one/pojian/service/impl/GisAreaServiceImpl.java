@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.one.pojian.entity.dto.AreaTDT;
 import com.one.pojian.entity.po.GisArea;
 import com.one.pojian.entity.po.GisAreaTDT;
+import com.one.pojian.exception.CustomErrorHandler;
 import com.one.pojian.mapper.GisAreaMapper;
 import com.one.pojian.mapper.GisAreaTDTMapper;
 import com.one.pojian.service.GisAreaService;
@@ -13,7 +14,6 @@ import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -76,17 +76,20 @@ public class GisAreaServiceImpl extends ServiceImpl<GisAreaMapper, GisArea> impl
         int total = 0;
         RestTemplate restTemplate = new RestTemplate();
         List<GisAreaTDT> gisAreaTDTList = gisAreaTDTMapper.getArea();
-        System.out.println(gisAreaTDTList.size()+"SSSSSSSSSSSSSSSSSSSSSSS");
         for (int i = 0; i < gisAreaTDTList.size(); i++) {
             String code = gisAreaTDTList.get(i).getCode();
+            restTemplate.setErrorHandler(new CustomErrorHandler());
             AreaTDT areaTDT = restTemplate.getForObject("http://api.tianditu.gov.cn/v2/administrative?keyword=" + code +"&childLevel=0&extensions=true&tk=9d87b18d094142a45cdd21155fad05c0",
                     AreaTDT.class);
+            if(areaTDT.getStatus() == 500) {
+                System.out.println(code + "报错啦llllllllllllll 500");
+                continue;
+            }
             String geo = areaTDT.getData().getDistrict().getBoundary();
             BigDecimal lng = areaTDT.getData().getDistrict().getCenter().getLng();
             BigDecimal lat = areaTDT.getData().getDistrict().getCenter().getLat();
             int num = 0;
             num = gisAreaTDTMapper.updateGeoById(code, geo, lng, lat);
-            System.out.println(num + "nummmmmmmmmmmmmmmmmmmmmmmmmmm");
             total += num;
         }
         return total;
