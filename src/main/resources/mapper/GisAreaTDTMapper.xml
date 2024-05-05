@@ -4,7 +4,7 @@
     <select id="getArea" resultType="com.one.pojian.entity.po.GisAreaTDT">
         select gat.id, gat.name, gat.code, gat.typename, gat.classcode, ST_AsText(gat.geo,'axis-order=long-lat') as geo
         from gis_area_tdt gat
-        where gat.id >= 184 and gat.id &lt;= 184
+        where gat.geo is null and gat.code != '156000000'
     </select>
     <select id="getProvince" resultType="hashmap">
         select gat.id, gat.name, gat.code, gat.typename, gat.classcode, ST_AsText(gat.geo,'axis-order=long-lat') as geo
@@ -31,4 +31,8 @@
         SET lng = #{lng}, lat = #{lat}, geo = ST_GeomFromText(#{geo},4326,'axis-order=long-lat')
         WHERE code = #{code}
     </update>
+    <insert id="insertAreaInfo">
+        insert into gis_area_tdt_menu (name, code, classcode, province_code, province_name, city_code, city_name)
+        values (#{name}, #{code}, #{classcode}, #{province_code}, #{province_name}, #{city_code}, #{city_name})
+    </insert>
 </mapper>

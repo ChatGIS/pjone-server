@@ -10,7 +10,7 @@ import java.util.Map;
 
 public interface GisAreaService extends IService<GisArea> {
     List<HashMap> getAreaByLevelAndCode(String code, int level, String type);
-    int crawlAreaOfTDT();
+    int crawlAreaOfTDT(int type);
     int addArea(GisArea gisArea);
     List<HashMap> getProvince(String type);
     List<Map> getChinaArea() throws ParseException;

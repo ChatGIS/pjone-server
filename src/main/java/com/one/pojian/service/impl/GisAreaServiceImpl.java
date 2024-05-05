@@ -1,6 +1,7 @@
 package com.one.pojian.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.one.pojian.entity.dto.AreaNameTDT;
 import com.one.pojian.entity.dto.AreaTDT;
 import com.one.pojian.entity.po.GisArea;
 import com.one.pojian.entity.po.GisAreaTDT;
@@ -15,6 +16,7 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
@@ -72,27 +74,93 @@ public class GisAreaServiceImpl extends ServiceImpl<GisAreaMapper, GisArea> impl
     }
 
     @Override
-    public int crawlAreaOfTDT() {
-        int total = 0;
+    public int crawlAreaOfTDT(int type) {
         RestTemplate restTemplate = new RestTemplate();
-        List<GisAreaTDT> gisAreaTDTList = gisAreaTDTMapper.getArea();
-        for (int i = 0; i < gisAreaTDTList.size(); i++) {
-            String code = gisAreaTDTList.get(i).getCode();
+        if(type == 1) {
             restTemplate.setErrorHandler(new CustomErrorHandler());
-            AreaTDT areaTDT = restTemplate.getForObject("http://api.tianditu.gov.cn/v2/administrative?keyword=" + code +"&childLevel=0&extensions=true&tk=9d87b18d094142a45cdd21155fad05c0",
-                    AreaTDT.class);
-            if(areaTDT.getStatus() == 500) {
-                System.out.println(code + "报错啦llllllllllllll 500");
-                continue;
+            String url = "https://cloudcenter.tianditu.gov.cn/api/portal/region/menu";
+            AreaNameTDT areaNameTDT = restTemplate.getForObject(url, AreaNameTDT.class);
+            if(areaNameTDT.getStatus() == 200) {
+                ArrayList<AreaNameTDT.Country> countries = areaNameTDT.getData();
+                for(int i = 0; i < countries.size(); i++) {
+                    AreaNameTDT.Country country = countries.get(i);
+                    int num = gisAreaTDTMapper.insertAreaInfo(country.getName(), country.getGb(), "0",null, null, null,null);
+                    System.out.println(num + country.getName()
+                    + country.getGb() + country.getPGb());
+
+                    ArrayList<AreaNameTDT.Country.Province> provinces = country.getChildren();
+                    int provinceSize = provinces.size();
+                    // int provinceSize = 16;  // test
+                    // 先插入省级别数据
+                    for(int j = 0; j < provinceSize; j++) {
+                        AreaNameTDT.Country.Province province = provinces.get(j);
+                        int num1 = gisAreaTDTMapper.insertAreaInfo(province.getName(), province.getGb(),
+                                "1", null, null, null, null);
+                        // System.out.println(num1 + province.getName() + province.getPGb());
+                    }
+                    // 再插入各省的地市数据
+                    for(int j = 0; j < provinceSize; j++) {
+                        AreaNameTDT.Country.Province province = provinces.get(j);
+                        String provinceName = province.getName();
+                        String provinceCode = province.getGb();
+                        ArrayList<AreaNameTDT.Country.Province.City> cities = province.getChildren();
+                        int citySize = cities.size();
+                        // int citySize = 2;  // test
+                        for (int k = 0; k < citySize; k++) {
+                            AreaNameTDT.Country.Province.City city = cities.get(k);
+                            int num2 = gisAreaTDTMapper.insertAreaInfo(city.getName(), city.getGb(),
+                                    "2", provinceCode, provinceName, null, null);
+                            System.out.println(num2 + city.getName() + city.getPGb());
+                        }
+                    }
+                    // 最后插入各区县数据
+                    for(int j = 0; j < provinceSize; j++) {
+                        AreaNameTDT.Country.Province province = provinces.get(j);
+                        String provinceName = province.getName();
+                        String provinceCode = province.getGb();
+                        ArrayList<AreaNameTDT.Country.Province.City> cities = province.getChildren();
+                        int citySize = cities.size();
+                        // int citySize = 2;  // test
+                        for (int k = 0; k < citySize; k++) {
+                            AreaNameTDT.Country.Province.City city = cities.get(k);
+                            String cityName = city.getName();
+                            String cityCode = city.getGb();
+                            ArrayList<AreaNameTDT.Country.Province.City.Region> regions = city.getChildren();
+                            int regionSize = regions.size();
+                            for(int l = 0; l < regionSize; l++) {
+                                AreaNameTDT.Country.Province.City.Region region = regions.get(l);
+                                int num3 = gisAreaTDTMapper.insertAreaInfo(region.getName(), region.getGb(),
+                                        "3", provinceCode, provinceName, cityCode, cityName);
+                                System.out.println(num3 + region.getName() + region.getPGb());
+                            }
+                        }
+                    }
+                }
             }
-            String geo = areaTDT.getData().getDistrict().getBoundary();
-            BigDecimal lng = areaTDT.getData().getDistrict().getCenter().getLng();
-            BigDecimal lat = areaTDT.getData().getDistrict().getCenter().getLat();
-            int num = 0;
-            num = gisAreaTDTMapper.updateGeoById(code, geo, lng, lat);
-            total += num;
+            return 0;
+
+        } else {
+            int total = 0;
+            List<GisAreaTDT> gisAreaTDTList = gisAreaTDTMapper.getArea();
+            for (int i = 0; i < gisAreaTDTList.size(); i++) {
+                String code = gisAreaTDTList.get(i).getCode();
+                restTemplate.setErrorHandler(new CustomErrorHandler());
+                AreaTDT areaTDT = restTemplate.getForObject("http://api.tianditu.gov.cn/v2/administrative?keyword=" + code +"&childLevel=0&extensions=true&tk=9d87b18d094142a45cdd21155fad05c0",
+                        AreaTDT.class);
+                if(areaTDT.getStatus() == 500) {
+                    System.out.println(code + "报错啦llllllllllllll 500");
+                    continue;
+                }
+                String geo = areaTDT.getData().getDistrict().getBoundary();
+                BigDecimal lng = areaTDT.getData().getDistrict().getCenter().getLng();
+                BigDecimal lat = areaTDT.getData().getDistrict().getCenter().getLat();
+                int num = 0;
+                System.out.println(geo + "gggggggggggggggggggggg");
+                num = gisAreaTDTMapper.updateGeoById(code, geo, lng, lat);
+                total += num;
+            }
+            return total;
         }
-        return total;
     }
 
     @Override

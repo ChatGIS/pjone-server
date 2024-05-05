@@ -17,4 +17,7 @@ public interface GisAreaTDTMapper extends BaseMapper<GisAreaTDT> {
     List<HashMap> getRegion(String code);
     List<HashMap> getTown(String code);
     int updateGeoById(String code, String geo, BigDecimal lng, BigDecimal lat);
+    int insertAreaInfo(String name, String code, String classcode,
+                       String province_code, String province_name,
+                       String city_code, String city_name);
 }

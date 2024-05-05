@@ -37,11 +37,12 @@ public class GisAreaController {
     }
     /**
      * 爬取天地图的行政区划数据
+     * @param type 1:行政区域名称等信息列表；2:行政区划空间数据
      * @return
      */
     @RequestMapping("crawlAreaOfTDT")
-    public Result crawlAreaOfTDT() {
-        int num = gisAreaService.crawlAreaOfTDT();
+    public Result crawlAreaOfTDT(int type) {
+        int num = gisAreaService.crawlAreaOfTDT(type);
         return Result.success(num);
     }
     @RequestMapping("/addArea")
