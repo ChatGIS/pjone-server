@@ -41,8 +41,8 @@ public class LifeColorController {
         return Result.success(num);
     }
     @RequestMapping("/getRecordsNum")
-    public Result getRecordsNum() {
-        List<List> records = lifeColorService.listRecordNum();
+    public Result getRecordsNum(String type) {
+        List<List> records = lifeColorService.listRecordNum(type);
         return Result.success(records);
     }
 }

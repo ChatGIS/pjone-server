@@ -39,12 +39,14 @@ public class LifeColorServiceImpl extends ServiceImpl<LifeColorMapper, LifeColor
         return num;
     }
     @Override
-    public List<List> listRecordNum() {
+    public List<List> listRecordNum(String type) {
         List records = new ArrayList<>();
-
         QueryWrapper<LifeColor> queryWrapper = new QueryWrapper<>();
-        queryWrapper.ne("type", "S");
-
+        if ("R".equals(type) || "G".equals(type)) {
+            queryWrapper.eq("type", type);
+        } else {
+            queryWrapper.and(i -> i.ne("type", "R").ne("type", "G"));
+        }
         List<LifeColor> listRecords = lifeColorMapper.selectList(queryWrapper);
         for(Integer i = 0; i < listRecords.size(); i++) {
             List record = new ArrayList();

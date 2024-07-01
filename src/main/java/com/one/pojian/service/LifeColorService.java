@@ -9,5 +9,5 @@ public interface LifeColorService {
     List<LifeColor> getLifeColorList();
     List<HashMap> getMinuteLastYear();
     int addLifeColor(LifeColor lifeColor);
-    List<List> listRecordNum();
+    List<List> listRecordNum(String type);
 }
