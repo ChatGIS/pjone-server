@@ -42,7 +42,7 @@ public class LifeColorServiceImpl extends ServiceImpl<LifeColorMapper, LifeColor
     public List<List> listRecordNum(String type) {
         List records = new ArrayList<>();
         QueryWrapper<LifeColor> queryWrapper = new QueryWrapper<>();
-        if ("R".equals(type) || "G".equals(type)) {
+        if (!type.startsWith("Y")) {
             queryWrapper.eq("type", type);
         } else {
             // queryWrapper.and(i -> i.ne("type", "R").ne("type", "G"));
