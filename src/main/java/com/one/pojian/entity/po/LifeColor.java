@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.sql.Date;
+import java.sql.Time;
 
 /**
  * @author ：ChatGIS
@@ -23,4 +24,5 @@ public class LifeColor {
     private String type;
     private Integer minute;
     private Date doDate;
+    private Time timePoint;
 }
