@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.one.pojian.mapper.LifeColorMapper">
     <select id="getMinuteLastYear" resultType="hashmap">
-        SELECT lc.`type` , sum(lc.`minute`) AS total_minute FROM life_color lc
+        SELECT lc.`type` , sum(lc.minute) AS total_minute FROM life_color lc
         WHERE lc.do_date > date_sub(now(), interval 1 year)
         GROUP BY lc.`type`
     </select>
@@ -22,5 +22,22 @@
         where lc.`type` = 'S' and lc.time_point is not null and lc.do_date > date_sub(now(), interval 1 year)) a
         GROUP BY
         a.group_name;
+    </select>
+    <select id="getSleepLongGroupLastYear" resultType="hashmap">
+        SELECT group_name AS name, COUNT(*) as value from
+            (SELECT
+            CASE
+            WHEN lc.minute  &lt; 360 THEN '&lt;6h'
+            WHEN lc.minute  >= 360 and lc.minute &lt; 390 THEN '6-6.5h'
+            WHEN lc.minute  >= 390 and lc.minute &lt; 420 THEN '6.5-7h'
+            WHEN lc.minute  >= 420 and lc.minute &lt; 450 THEN '7-7.5h'
+            WHEN lc.minute  >= 450 and lc.minute &lt; 480 THEN '7.5-8h'
+            ELSE '&gt;8h'
+            END AS group_name
+            FROM
+            life_color lc
+            where lc.`type` = 'S' and lc.minute is not null and lc.do_date > date_sub(now(), interval 1 year)) a
+        GROUP BY
+            a.group_name;
     </select>
 </mapper>
