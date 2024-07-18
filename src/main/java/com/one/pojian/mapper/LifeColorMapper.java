@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface LifeColorMapper extends BaseMapper<LifeColor> {
     List<HashMap> getMinuteLastYear();
-    List<HashMap> getSleepGroupLastYear();
+    List<HashMap> getSleepPointGroupLastYear();
     List<HashMap> getSleepLongGroupLastYear();
 }

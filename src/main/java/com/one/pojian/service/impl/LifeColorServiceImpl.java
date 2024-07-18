@@ -62,8 +62,8 @@ public class LifeColorServiceImpl extends ServiceImpl<LifeColorMapper, LifeColor
     }
 
     @Override
-    public List<HashMap> getSleepGroupLastYear() {
-        List<HashMap> list = lifeColorMapper.getSleepGroupLastYear();
+    public List<HashMap> getSleepPointGroupLastYear() {
+        List<HashMap> list = lifeColorMapper.getSleepPointGroupLastYear();
         return list;
     }
     @Override

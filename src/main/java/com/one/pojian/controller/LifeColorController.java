@@ -45,9 +45,9 @@ public class LifeColorController {
         List<List> records = lifeColorService.listRecordNum(type);
         return Result.success(records);
     }
-    @RequestMapping("/getSleepGroupLastYear")
-    public Result getSleepGroupLastYear() {
-        List<HashMap> list = lifeColorService.getSleepGroupLastYear();
+    @RequestMapping("/getSleepPointGroupLastYear")
+    public Result getSleepPointGroupLastYear() {
+        List<HashMap> list = lifeColorService.getSleepPointGroupLastYear();
         return Result.success(list);
     };
     @RequestMapping("/getSleepLongGroupLastYear")

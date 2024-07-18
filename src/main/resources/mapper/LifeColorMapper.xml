@@ -6,7 +6,7 @@
         WHERE lc.do_date > date_sub(now(), interval 1 year)
         GROUP BY lc.`type`
     </select>
-    <select id="getSleepGroupLastYear" resultType="hashmap">
+    <select id="getSleepPointGroupLastYear" resultType="hashmap">
         SELECT group_name AS name, COUNT(*) as value from
         (SELECT
         CASE
