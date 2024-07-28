@@ -20,7 +20,6 @@ import java.sql.Time;
 public class LifeColor {
     @TableId(type = IdType.AUTO)
     private Long id;
-    private Integer num;
     private String type;
     private Integer minute;
     private Date doDate;
