@@ -1,5 +1,8 @@
 package com.one.pojian.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.one.pojian.entity.po.Saying;
 import com.one.pojian.mapper.SayingMapper;
@@ -43,7 +46,28 @@ public class SayingServiceImpl extends ServiceImpl<SayingMapper, Saying> impleme
             }
             listList.add(values);
         }
-
         return listList;
+    }
+    @Override
+    public IPage<Saying> getSayingPageList(HashMap params) {
+        int current = (int) params.getOrDefault("current", 1);
+        int size = (int) params.getOrDefault("size", 10);
+        String name = (String) params.getOrDefault("name", "");
+        String author = (String) params.getOrDefault("author", "");
+        String book = (String) params.getOrDefault("book", "");
+        String article = (String) params.getOrDefault("article", "");
+        QueryWrapper<Saying> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("name", name);
+        if(author != null && !author.trim().isEmpty()) {
+            queryWrapper.like("author", author);
+        }
+        if(book != null && !book.trim().isEmpty()) {
+            queryWrapper.like("book", book);
+        }
+        if(article != null && !article.trim().isEmpty()) {
+            queryWrapper.like("article", article);
+        }
+        IPage<Saying> sayingIPage = new Page<>(current, size);
+        return  sayingMapper.selectPage(sayingIPage, queryWrapper);
     }
 }
