@@ -35,6 +35,11 @@ public class LifeColorController {
         List<HashMap> list = lifeColorService.getMinuteLastYear();
         return Result.success(list);
     };
+    @RequestMapping("/getNumLastYear")
+    public Result getNumLastYear() {
+        List<HashMap> list = lifeColorService.getNumLastYear();
+        return Result.success(list);
+    };
     @RequestMapping("addLifeColor")
     public Result addLifeColor(@RequestBody LifeColor lifeColor) {
         int num = lifeColorService.addLifeColor(lifeColor);

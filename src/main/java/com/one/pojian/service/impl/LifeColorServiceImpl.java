@@ -34,6 +34,12 @@ public class LifeColorServiceImpl extends ServiceImpl<LifeColorMapper, LifeColor
     }
 
     @Override
+    public List<HashMap> getNumLastYear() {
+        List<HashMap> list = lifeColorMapper.getNumLastYear();
+        return list;
+    }
+
+    @Override
     public int addLifeColor(LifeColor lifeColor) {
         int num = lifeColorMapper.insert(lifeColor);
         return num;
