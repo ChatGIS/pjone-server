@@ -1,5 +1,6 @@
 package com.one.pojian.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.one.pojian.entity.base.Result;
 import com.one.pojian.entity.po.LifeColor;
 import com.one.pojian.service.LifeColorService;
@@ -26,8 +27,8 @@ public class LifeColorController {
     private LifeColorService lifeColorService;
 
     @RequestMapping("/getLifeColorList")
-    public Result getLifeColorList() {
-        List<LifeColor> lifeColorList = lifeColorService.getLifeColorList();
+    public Result getLifeColorList(@RequestBody HashMap params) {
+        IPage<LifeColor> lifeColorList = lifeColorService.getLifeColorList(params);
         return  Result.success(lifeColorList);
     }
     @RequestMapping("/getMinuteLastYear")

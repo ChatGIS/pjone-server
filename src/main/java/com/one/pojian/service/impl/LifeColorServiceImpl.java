@@ -1,8 +1,11 @@
 package com.one.pojian.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.one.pojian.entity.po.LifeColor;
+import com.one.pojian.entity.po.Saying;
 import com.one.pojian.mapper.LifeColorMapper;
 import com.one.pojian.service.LifeColorService;
 import jakarta.annotation.Resource;
@@ -20,11 +23,17 @@ public class LifeColorServiceImpl extends ServiceImpl<LifeColorMapper, LifeColor
     private LifeColorMapper lifeColorMapper;
 
     @Override
-    public List<LifeColor> getLifeColorList() {
+    public IPage<LifeColor> getLifeColorList(HashMap params) {
+        int current = (int) params.getOrDefault("current", 1);
+        int size = (int) params.getOrDefault("size", 10);
+        String type = (String) params.getOrDefault("type", "");
         QueryWrapper<LifeColor> queryWrapper = new QueryWrapper<>();
+        if(type != null && !type.trim().isEmpty()) {
+            queryWrapper.eq("type", type);
+        }
         queryWrapper.orderByDesc("id");
-        queryWrapper.last("limit 10");
-        return list(queryWrapper);
+        IPage<LifeColor> lifeColorIPage = new Page<>(current, size);
+        return  lifeColorMapper.selectPage(lifeColorIPage, queryWrapper);
     }
 
     @Override
