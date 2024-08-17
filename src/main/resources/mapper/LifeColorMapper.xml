@@ -6,4 +6,21 @@
         WHERE lc.do_date > date_sub(now(), interval 1 year)
         GROUP BY lc.`type`
     </select>
+    <select id="getSleepGroupLastYear" resultType="hashmap">
+        SELECT group_name AS name, COUNT(*) as value from
+        (SELECT
+        CASE
+        WHEN (lc.time_point  &lt;= '22:00:00' and lc.time_point > '12:00:00') THEN '&lt;10'
+        WHEN (lc.time_point  &lt;= '23:00:00' and lc.time_point > '22:00:00') THEN '10-11'
+        WHEN (lc.time_point  &lt;= '23:30:00' and lc.time_point > '23:00:00') THEN '11-11.5'
+        WHEN (lc.time_point  &lt;= '24:00:00' and lc.time_point > '23:30:00') THEN '11.5-12'
+        WHEN (lc.time_point  &lt;= '01:00:00' and lc.time_point > '00:00:00') THEN '12-1'
+        ELSE '&gt;1'
+        END AS group_name
+        FROM
+        life_color lc
+        where lc.`type` = 'S' and lc.time_point is not null and lc.do_date > date_sub(now(), interval 1 year)) a
+        GROUP BY
+        a.group_name;
+    </select>
 </mapper>

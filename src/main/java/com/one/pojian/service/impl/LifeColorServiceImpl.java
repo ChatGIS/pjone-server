@@ -60,4 +60,10 @@ public class LifeColorServiceImpl extends ServiceImpl<LifeColorMapper, LifeColor
         }
         return records;
     }
+
+    @Override
+    public List<HashMap> getSleepGroupLastYear() {
+        List<HashMap> list = lifeColorMapper.getSleepGroupLastYear();
+        return list;
+    }
 }
