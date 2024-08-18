@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
+import java.sql.Date;
+
 /**
  * @description：语录实体
  * @modified By：
@@ -17,4 +19,5 @@ public class Saying {
     private String author;
     private String book;
     private String article;
+    private Date createDate;
 }

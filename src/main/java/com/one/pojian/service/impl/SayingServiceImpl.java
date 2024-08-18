@@ -67,6 +67,7 @@ public class SayingServiceImpl extends ServiceImpl<SayingMapper, Saying> impleme
         if(article != null && !article.trim().isEmpty()) {
             queryWrapper.like("article", article);
         }
+        queryWrapper.orderByDesc("id");
         IPage<Saying> sayingIPage = new Page<>(current, size);
         return  sayingMapper.selectPage(sayingIPage, queryWrapper);
     }
