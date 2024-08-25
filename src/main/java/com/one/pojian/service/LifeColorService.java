@@ -11,6 +11,7 @@ public interface LifeColorService {
     List<HashMap> getMinuteLastYear();
     List<HashMap> getNumLastYear();
     int addLifeColor(LifeColor lifeColor);
+    int updateLifeColor(LifeColor lifeColor);
     List<List> listRecordNum(String type);
     List<HashMap> getSleepPointGroupLastYear();
     List<HashMap> getSleepLongGroupLastYear();

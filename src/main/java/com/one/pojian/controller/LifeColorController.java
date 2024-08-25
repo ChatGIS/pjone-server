@@ -46,6 +46,11 @@ public class LifeColorController {
         int num = lifeColorService.addLifeColor(lifeColor);
         return Result.success(num);
     }
+    @RequestMapping("updateLifeColor")
+    public Result updateLifeColor(@RequestBody LifeColor lifeColor) {
+        int num = lifeColorService.updateLifeColor(lifeColor);
+        return Result.success(num);
+    }
     @RequestMapping("/getRecordsNum")
     public Result getRecordsNum(String type) {
         List<List> records = lifeColorService.listRecordNum(type);

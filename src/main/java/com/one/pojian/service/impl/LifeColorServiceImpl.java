@@ -54,6 +54,11 @@ public class LifeColorServiceImpl extends ServiceImpl<LifeColorMapper, LifeColor
         return num;
     }
     @Override
+    public int updateLifeColor(LifeColor lifeColor) {
+        int num = lifeColorMapper.updateById(lifeColor);
+        return num;
+    }
+    @Override
     public List<List> listRecordNum(String type) {
         List records = new ArrayList<>();
         QueryWrapper<LifeColor> queryWrapper = new QueryWrapper<>();
