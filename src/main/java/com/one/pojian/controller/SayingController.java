@@ -28,6 +28,11 @@ public class SayingController {
         int num = sayingService.addSaying(saying);
         return Result.success(num);
     }
+    @RequestMapping("updateSaying")
+    public Result updateSaying(@RequestBody Saying saying) {
+        int num = sayingService.updateSaying(saying);
+        return Result.success(num);
+    }
     @RequestMapping("/getRandomSaying")
     public Result getRandomSaying() {
         Saying saying = sayingService.getRandomSaying();
