@@ -10,6 +10,7 @@ import java.util.List;
 public interface SayingService extends IService<Saying> {
     int addSaying(Saying saying);
     int updateSaying(Saying saying);
+    int deleteSayingById(String id);
     Saying getRandomSaying();
     List<List<Object>> getCountEveryDay();
     IPage<Saying> getSayingPageList(HashMap params);

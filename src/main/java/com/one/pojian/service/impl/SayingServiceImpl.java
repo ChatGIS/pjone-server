@@ -29,9 +29,16 @@ public class SayingServiceImpl extends ServiceImpl<SayingMapper, Saying> impleme
         int num = sayingMapper.insert(saying);
         return num;
     }
+    @Override
     public int updateSaying(Saying saying) {
         return sayingMapper.updateById(saying);
     }
+
+    @Override
+    public int deleteSayingById(String id) {
+        return sayingMapper.deleteById(id);
+    }
+
     @Override
     public Saying getRandomSaying() {
         Saying saying = sayingMapper.getRandomSaying();

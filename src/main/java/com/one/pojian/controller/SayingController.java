@@ -33,6 +33,11 @@ public class SayingController {
         int num = sayingService.updateSaying(saying);
         return Result.success(num);
     }
+    @RequestMapping("/deleteSayingById")
+    public Result deleteSayingById(String id) {
+        int num = sayingService.deleteSayingById(id);
+        return Result.success(num);
+    }
     @RequestMapping("/getRandomSaying")
     public Result getRandomSaying() {
         Saying saying = sayingService.getRandomSaying();
