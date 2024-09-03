@@ -15,9 +15,10 @@ public class SysTagServiceImpl extends ServiceImpl<SysTagMapper, SysTag> impleme
     @Resource
     private SysTagMapper sysTagMapper;
     @Override
-    public List<SysTag> getTagByType(String type) {
+    public List<SysTag> getTag(String type, String name) {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("type", type);
+        queryWrapper.like("name", name);
         queryWrapper.orderByAsc("orders");
         return sysTagMapper.selectList(queryWrapper);
     }

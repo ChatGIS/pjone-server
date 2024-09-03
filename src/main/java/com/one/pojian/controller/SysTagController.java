@@ -17,9 +17,9 @@ public class SysTagController {
     @Autowired
     private SysTagService sysTagService;
 
-    @RequestMapping("/getTagByType")
-    public Result getTagByType(String type) {
-        List<SysTag> sysTagList = sysTagService.getTagByType(type);
+    @RequestMapping("/getTag")
+    public Result getTag(String type, String name) {
+        List<SysTag> sysTagList = sysTagService.getTag(type, name);
         return Result.success(sysTagList);
     }
 }
