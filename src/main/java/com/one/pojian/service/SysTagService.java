@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface SysTagService extends IService<SysTag> {
     List<SysTag> getTag(String type, String name);
+    int addTag(SysTag tag);
 }

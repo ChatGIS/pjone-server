@@ -22,4 +22,11 @@ public class SysTagServiceImpl extends ServiceImpl<SysTagMapper, SysTag> impleme
         queryWrapper.orderByAsc("orders");
         return sysTagMapper.selectList(queryWrapper);
     }
+
+    @Override
+    public int addTag(SysTag tag) {
+        System.out.println(tag.getName() + "aaaaaaaaaaaaaa");
+        return sysTagMapper.insert(tag);
+    }
+
 }

@@ -22,4 +22,8 @@ public class SysTagController {
         List<SysTag> sysTagList = sysTagService.getTag(type, name);
         return Result.success(sysTagList);
     }
+    @RequestMapping("/addTag")
+    public Result addTag(@RequestBody SysTag tag) {
+        return Result.success(sysTagService.addTag(tag));
+    }
 }
