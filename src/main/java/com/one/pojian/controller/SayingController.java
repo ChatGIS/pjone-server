@@ -2,6 +2,7 @@ package com.one.pojian.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.one.pojian.entity.base.Result;
+import com.one.pojian.entity.dto.SayingDTO;
 import com.one.pojian.entity.po.Saying;
 import com.one.pojian.service.SayingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +25,14 @@ public class SayingController {
     private SayingService sayingService;
 
     @RequestMapping("addSaying")
-    public Result addSaying(@RequestBody Saying saying) {
+    public Result addSaying(@RequestBody SayingDTO saying) {
         int num = sayingService.addSaying(saying);
-        return Result.success(num);
+        return Result.success(num == 1);
     }
     @RequestMapping("updateSaying")
-    public Result updateSaying(@RequestBody Saying saying) {
+    public Result updateSaying(@RequestBody SayingDTO saying) {
         int num = sayingService.updateSaying(saying);
-        return Result.success(num);
+        return Result.success(num == 1);
     }
     @RequestMapping("/deleteSayingById")
     public Result deleteSayingById(String id) {

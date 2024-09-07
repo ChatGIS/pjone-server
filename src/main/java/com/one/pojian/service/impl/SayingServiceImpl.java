@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.one.pojian.entity.dto.SayingDTO;
+import com.one.pojian.entity.po.RelSayingTag;
 import com.one.pojian.entity.po.Saying;
+import com.one.pojian.mapper.RelSayingTagMapper;
 import com.one.pojian.mapper.SayingMapper;
 import com.one.pojian.service.SayingService;
 import jakarta.annotation.Resource;
@@ -23,15 +26,36 @@ import java.util.List;
 public class SayingServiceImpl extends ServiceImpl<SayingMapper, Saying> implements SayingService {
     @Resource
     private SayingMapper sayingMapper;
+    @Resource
+    private RelSayingTagMapper relSayingTagMapper;
 
     @Override
-    public int addSaying(Saying saying) {
+    public int addSaying(SayingDTO saying) {
         int num = sayingMapper.insert(saying);
+        QueryWrapper queryWrapperDelete = new QueryWrapper();
+        queryWrapperDelete.eq("saying_id", saying.getId());
+        relSayingTagMapper.delete(queryWrapperDelete);
+        for(Integer tagId : saying.getTags()) {
+            RelSayingTag relSayingTag = new RelSayingTag();
+            relSayingTag.setSayingId(saying.getId());
+            relSayingTag.setTagId(tagId);
+            relSayingTagMapper.insert(relSayingTag);
+        }
         return num;
     }
     @Override
-    public int updateSaying(Saying saying) {
-        return sayingMapper.updateById(saying);
+    public int updateSaying(SayingDTO saying) {
+        int sNum = sayingMapper.updateById(saying);
+        QueryWrapper queryWrapperDelete = new QueryWrapper();
+        queryWrapperDelete.eq("saying_id", saying.getId());
+        relSayingTagMapper.delete(queryWrapperDelete);
+        for(Integer tagId : saying.getTags()) {
+            RelSayingTag relSayingTag = new RelSayingTag();
+            relSayingTag.setSayingId(saying.getId());
+            relSayingTag.setTagId(tagId);
+            relSayingTagMapper.insert(relSayingTag);
+        }
+        return sNum;
     }
 
     @Override
