@@ -96,11 +96,18 @@ public class SayingServiceImpl extends ServiceImpl<SayingMapper, Saying> impleme
         String author = (String) params.getOrDefault("author", "");
         String book = (String) params.getOrDefault("book", "");
         String article = (String) params.getOrDefault("article", "");
-        List<Integer> tagIds = (List<Integer>) params.getOrDefault("tagIds", "[]");
-        Integer tagSize = tagIds.size();
+        String tagIds = (String) params.getOrDefault("tagIds", "");
+        List<Integer> listTagId = new ArrayList<>();
+        if(!tagIds.isEmpty()) {
+            String [] tagIdArray =tagIds.split(",");
+            for (String part : tagIdArray) {
+                listTagId.add(Integer.parseInt(part.trim()));
+            }
+        }
+        Integer tagSize = listTagId.size();
         Integer startIndex = size * (current - 1);
-        List<Integer> sayingIdList = sayingMapper.getSayingPageList(startIndex, size, author, book, article, tagIds, tagSize);
-        Integer total = sayingMapper.getSayingTotal(author, book, article, tagIds, tagSize);
+        List<Integer> sayingIdList = sayingMapper.getSayingPageList(startIndex, size, author, book, article, listTagId, tagSize);
+        Integer total = sayingMapper.getSayingTotal(author, book, article, listTagId, tagSize);
         for(Integer id : sayingIdList) {
             sayingDTOList.add(sayingMapper.getSayingTags(id));
         }

@@ -23,10 +23,12 @@
         LEFT JOIN
             sys_tag st ON st.id = rst.tag_id
         <where>
-            st.id in
-            <foreach item="item" index="index" collection="tagIds" open="(" separator="," close=")">
-                #{item}
-            </foreach>
+            <if test="tagIds != null and !tagIds.isEmpty()">
+                st.id in
+                <foreach item="item" index="index" collection="tagIds" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
             <if test="author != null and author != ''">
                 and s.author like concat('%', #{author}, '%')
             </if>
@@ -39,7 +41,9 @@
         </where>
         GROUP BY
             s.id
-        HAVING COUNT(DISTINCT st.id) = #{tagSize}
+        <if test="tagSize != 0">
+            HAVING COUNT(DISTINCT st.id) = #{tagSize}
+        </if>
         ORDER BY
             s.id desc
     </sql>
