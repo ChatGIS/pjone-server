@@ -29,6 +29,9 @@
                     #{item}
                 </foreach>
             </if>
+            <if test="name != null and name != ''">
+                and s.name like concat('%', #{name}, '%')
+            </if>
             <if test="author != null and author != ''">
                 and s.author like concat('%', #{author}, '%')
             </if>

@@ -10,9 +10,9 @@ import java.util.List;
 public interface SayingMapper extends BaseMapper<Saying> {
     Saying getRandomSaying();
     List<HashMap> getCountEveryDay();
-    List<Integer> getSayingPageList(Integer startIndex, Integer size, String author, String book,
+    List<Integer> getSayingPageList(Integer startIndex, Integer size, String name, String author, String book,
                                       String article, List<Integer> tagIds, Integer tagSize);
-    Integer getSayingTotal(String author, String book,
+    Integer getSayingTotal(String name, String author, String book,
                            String article, List<Integer> tagIds, Integer tagSize);
     SayingDTO getSayingTags(Integer id);
 }

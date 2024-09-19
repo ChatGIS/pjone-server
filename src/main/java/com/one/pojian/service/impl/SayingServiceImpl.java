@@ -106,8 +106,8 @@ public class SayingServiceImpl extends ServiceImpl<SayingMapper, Saying> impleme
         }
         Integer tagSize = listTagId.size();
         Integer startIndex = size * (current - 1);
-        List<Integer> sayingIdList = sayingMapper.getSayingPageList(startIndex, size, author, book, article, listTagId, tagSize);
-        Integer total = sayingMapper.getSayingTotal(author, book, article, listTagId, tagSize);
+        List<Integer> sayingIdList = sayingMapper.getSayingPageList(startIndex, size, name, author, book, article, listTagId, tagSize);
+        Integer total = sayingMapper.getSayingTotal(name, author, book, article, listTagId, tagSize);
         for(Integer id : sayingIdList) {
             sayingDTOList.add(sayingMapper.getSayingTags(id));
         }
