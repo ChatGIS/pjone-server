@@ -23,4 +23,9 @@ public class LifeSitController {
         Integer num = lifeSitService.addSit(lifeSit);
         return  Result.success(num == 1);
     }
+    @RequestMapping("/getSits")
+    public Result getSits(@RequestBody LifeSit lifeSit) {
+        List<LifeSit> sits = lifeSitService.getSits(lifeSit.getDoDate());
+        return  Result.success(sits);
+    }
 }
