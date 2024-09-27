@@ -26,8 +26,9 @@ public class LifeSitServiceImpl extends ServiceImpl<LifeSitMapper, LifeSit> impl
         sit.setDoDate(LocalDateTime.now());
         return lifeSitMapper.insert(sit);
     }
-    public List<LifeSit> getSits(LocalDateTime localDateTime) {
+    public List<LifeSit> getSits(LocalDateTime currentTime) {
         QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.gt("do_date", currentTime.toLocalDate());
         return lifeSitMapper.selectList(queryWrapper);
     }
 }
