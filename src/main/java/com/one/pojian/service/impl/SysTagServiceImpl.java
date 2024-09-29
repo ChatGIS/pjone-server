@@ -7,6 +7,7 @@ import com.one.pojian.mapper.SysTagMapper;
 import com.one.pojian.service.SysTagService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class SysTagServiceImpl extends ServiceImpl<SysTagMapper, SysTag> impleme
     public List<SysTag> getTag(String type, String name) {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("type", type);
-        queryWrapper.like("name", name);
+        queryWrapper.like(StringUtils.hasText(name),"name", name);
         queryWrapper.orderByAsc("orders");
         return sysTagMapper.selectList(queryWrapper);
     }
