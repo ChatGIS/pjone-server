@@ -25,8 +25,11 @@ public class SysTagServiceImpl extends ServiceImpl<SysTagMapper, SysTag> impleme
 
     @Override
     public int addTag(SysTag tag) {
-        System.out.println(tag.getName() + "aaaaaaaaaaaaaa");
         return sysTagMapper.insert(tag);
     }
 
+    @Override
+    public int deleteTag(SysTag tag) {
+        return sysTagMapper.deleteById(tag);
+    }
 }

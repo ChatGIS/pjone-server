@@ -26,4 +26,8 @@ public class SysTagController {
     public Result addTag(@RequestBody SysTag tag) {
         return Result.success(sysTagService.addTag(tag));
     }
+    @RequestMapping("/deleteTag")
+    public Result deleteTag(@RequestBody SysTag tag) {
+        return Result.success(sysTagService.deleteTag(tag));
+    }
 }
