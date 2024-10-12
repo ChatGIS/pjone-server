@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.one.pojian.entity.base.ResultPage;
 import com.one.pojian.entity.dto.SayingDTO;
 import com.one.pojian.entity.po.RelSayingTag;
 import com.one.pojian.entity.po.Saying;
@@ -35,10 +36,12 @@ public class SayingServiceImpl extends ServiceImpl<SayingMapper, Saying> impleme
         QueryWrapper queryWrapperDelete = new QueryWrapper();
         queryWrapperDelete.eq("saying_id", saying.getId());
         relSayingTagMapper.delete(queryWrapperDelete);
-        for(Integer tagId : saying.getTags()) {
+        String tagIds = saying.getTagIds();
+        String[] tags = tagIds.split(",");
+        for(String tagId : tags) {
             RelSayingTag relSayingTag = new RelSayingTag();
             relSayingTag.setSayingId(saying.getId());
-            relSayingTag.setTagId(tagId);
+            relSayingTag.setTagId(Integer.valueOf(tagId));
             relSayingTagMapper.insert(relSayingTag);
         }
         return num;
@@ -49,10 +52,12 @@ public class SayingServiceImpl extends ServiceImpl<SayingMapper, Saying> impleme
         QueryWrapper queryWrapperDelete = new QueryWrapper();
         queryWrapperDelete.eq("saying_id", saying.getId());
         relSayingTagMapper.delete(queryWrapperDelete);
-        for(Integer tagId : saying.getTags()) {
+        String tagIds = saying.getTagIds();
+        String[] tags = tagIds.split(",");
+        for(String tagId : tags) {
             RelSayingTag relSayingTag = new RelSayingTag();
             relSayingTag.setSayingId(saying.getId());
-            relSayingTag.setTagId(tagId);
+            relSayingTag.setTagId(Integer.valueOf(tagId));
             relSayingTagMapper.insert(relSayingTag);
         }
         return sNum;
@@ -83,26 +88,22 @@ public class SayingServiceImpl extends ServiceImpl<SayingMapper, Saying> impleme
         return listList;
     }
     @Override
-    public IPage<Saying> getSayingPageList(HashMap params) {
+    public ResultPage<SayingDTO> getSayingPageList(HashMap params) {
+        List<SayingDTO> sayingDTOList = new ArrayList<>();
         int current = (int) params.getOrDefault("current", 1);
         int size = (int) params.getOrDefault("size", 10);
         String name = (String) params.getOrDefault("name", "");
         String author = (String) params.getOrDefault("author", "");
         String book = (String) params.getOrDefault("book", "");
         String article = (String) params.getOrDefault("article", "");
-        QueryWrapper<Saying> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("name", name);
-        if(author != null && !author.trim().isEmpty()) {
-            queryWrapper.like("author", author);
+        List<Integer> tagIds = (List<Integer>) params.getOrDefault("tagIds", "[]");
+        Integer tagSize = tagIds.size();
+        Integer startIndex = size * (current - 1);
+        List<Integer> sayingIdList = sayingMapper.getSayingPageList(startIndex, size, author, book, article, tagIds, tagSize);
+        Integer total = sayingMapper.getSayingTotal(author, book, article, tagIds, tagSize);
+        for(Integer id : sayingIdList) {
+            sayingDTOList.add(sayingMapper.getSayingTags(id));
         }
-        if(book != null && !book.trim().isEmpty()) {
-            queryWrapper.like("book", book);
-        }
-        if(article != null && !article.trim().isEmpty()) {
-            queryWrapper.like("article", article);
-        }
-        queryWrapper.orderByDesc("id");
-        IPage<Saying> sayingIPage = new Page<>(current, size);
-        return  sayingMapper.selectPage(sayingIPage, queryWrapper);
+        return new ResultPage<SayingDTO>(sayingDTOList, total, size, current, 0);
     }
 }

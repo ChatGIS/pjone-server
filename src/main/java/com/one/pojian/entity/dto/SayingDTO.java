@@ -7,6 +7,6 @@ import java.util.List;
 
 @Data
 public class SayingDTO extends Saying {
-    private List<Integer> tags;
-    private List<String> tagsName;
+    private String tagIds;
+    private String tagNames;
 }

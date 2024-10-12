@@ -2,6 +2,7 @@ package com.one.pojian.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.one.pojian.entity.base.Result;
+import com.one.pojian.entity.base.ResultPage;
 import com.one.pojian.entity.dto.SayingDTO;
 import com.one.pojian.entity.po.Saying;
 import com.one.pojian.service.SayingService;
@@ -51,7 +52,7 @@ public class SayingController {
     }
     @RequestMapping("/getSayingPageList")
     public Result getSayingList(@RequestBody HashMap params) {
-        IPage<Saying> sayingPageResult = sayingService.getSayingPageList(params);
+        ResultPage<SayingDTO> sayingPageResult = sayingService.getSayingPageList(params);
         return Result.success(sayingPageResult);
     }
 }
