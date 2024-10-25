@@ -62,11 +62,11 @@ public class LifeColorServiceImpl extends ServiceImpl<LifeColorMapper, LifeColor
     public List<List> listRecordNum(String type) {
         List records = new ArrayList<>();
         QueryWrapper<LifeColor> queryWrapper = new QueryWrapper<>();
-        if (!type.startsWith("Y")) {
+        if (!type.equals("Y")) {
             queryWrapper.eq("type", type);
         } else {
             // queryWrapper.and(i -> i.ne("type", "R").ne("type", "G"));
-            queryWrapper.likeRight("type", "Y");
+            queryWrapper.likeRight("type", "Y").ne("type", "YH");
         }
         queryWrapper.select("do_date", "Sum(minute) as totalMinute")
                 .groupBy("do_date");
