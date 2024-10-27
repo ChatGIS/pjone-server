@@ -13,6 +13,6 @@ public interface LifeColorService {
     int addLifeColor(LifeColor lifeColor);
     int updateLifeColor(LifeColor lifeColor);
     List<List> listRecordNum(String type);
-    List<HashMap> getSleepPointGroupLastYear();
-    List<HashMap> getSleepLongGroupLastYear();
+    List<HashMap> getSleepPointGroup(Integer num);
+    List<HashMap> getSleepLongGroup(Integer num);
 }

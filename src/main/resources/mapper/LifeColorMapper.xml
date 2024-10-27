@@ -11,7 +11,7 @@
         WHERE lc.do_date > date_sub(now(), interval 1 year)
         GROUP BY lc.`type`
     </select>
-    <select id="getSleepPointGroupLastYear" resultType="hashmap">
+    <select id="getSleepPointGroup" resultType="hashmap">
         SELECT group_name AS name, COUNT(*) as value from
         (SELECT
         CASE
@@ -24,11 +24,11 @@
         END AS group_name
         FROM
         life_color lc
-        where lc.`type` = 'S' and lc.time_point is not null and lc.do_date > date_sub(now(), interval 1 year)) a
+        where lc.`type` = 'S' and lc.time_point is not null and lc.do_date > date_sub(now(), interval #{num} day)) a
         GROUP BY
         a.group_name;
     </select>
-    <select id="getSleepLongGroupLastYear" resultType="hashmap">
+    <select id="getSleepLongGroup" resultType="hashmap">
         SELECT group_name AS name, COUNT(*) as value from
             (SELECT
             CASE
@@ -41,7 +41,7 @@
             END AS group_name
             FROM
             life_color lc
-            where lc.`type` = 'S' and lc.minute is not null and lc.do_date > date_sub(now(), interval 1 year)) a
+            where lc.`type` = 'S' and lc.minute is not null and lc.do_date > date_sub(now(), interval #{num} day)) a
         GROUP BY
             a.group_name;
     </select>

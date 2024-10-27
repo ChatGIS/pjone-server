@@ -56,14 +56,14 @@ public class LifeColorController {
         List<List> records = lifeColorService.listRecordNum(type);
         return Result.success(records);
     }
-    @RequestMapping("/getSleepPointGroupLastYear")
-    public Result getSleepPointGroupLastYear() {
-        List<HashMap> list = lifeColorService.getSleepPointGroupLastYear();
+    @RequestMapping("getSleepPointGroup")
+    public Result getSleepPointGroup(Integer num) {
+        List<HashMap> list = lifeColorService.getSleepPointGroup(num);
         return Result.success(list);
     };
-    @RequestMapping("/getSleepLongGroupLastYear")
-    public Result getSleepLongGroupLastYear() {
-        List<HashMap> list = lifeColorService.getSleepLongGroupLastYear();
+    @RequestMapping("/getSleepLongGroup")
+    public Result getSleepLongGroup(Integer num, String unit) {
+        List<HashMap> list = lifeColorService.getSleepLongGroup(num);
         return Result.success(list);
     };
 }
