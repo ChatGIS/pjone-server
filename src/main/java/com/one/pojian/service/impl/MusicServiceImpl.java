@@ -40,7 +40,7 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
         Integer startIndex = size * (current - 1);
         IPage<Music> page = new Page<>(current, size);
         QueryWrapper<Music> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("name", name);
+        queryWrapper.like("name", name).orderByDesc("modify_date");
         IPage<Music> musicIPage = musicMapper.selectPage(page, queryWrapper);
         return musicIPage;
     }
