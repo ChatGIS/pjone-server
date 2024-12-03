@@ -2,6 +2,7 @@ package com.one.pojian.controller;
 
 import com.one.pojian.entity.base.Result;
 import com.one.pojian.entity.po.LifeSit;
+import com.one.pojian.entity.po.LifeUp;
 import com.one.pojian.entity.po.LifeWeight;
 import com.one.pojian.service.LifeSitService;
 import com.one.pojian.service.LifeWeightService;
@@ -19,7 +20,7 @@ public class LifeSitController {
     private LifeSitService lifeSitService;
 
     @RequestMapping("/addSit")
-    public Result getWeight(@RequestBody LifeSit lifeSit) {
+    public Result addSit(@RequestBody LifeSit lifeSit) {
         Integer num = lifeSitService.addSit(lifeSit);
         return  Result.success(num == 1);
     }
@@ -27,5 +28,15 @@ public class LifeSitController {
     public Result getSits(@RequestBody LifeSit lifeSit) {
         List<LifeSit> sits = lifeSitService.getSits(lifeSit.getDoDate());
         return  Result.success(sits);
+    }
+    @RequestMapping("/addUp")
+    public Result addUp() {
+        Integer num = lifeSitService.addUp();
+        return Result.success(num);
+    }
+    @RequestMapping("/getUp")
+    public Result getUp() {
+        LifeUp lifeUp = lifeSitService.getUp();
+        return Result.success(lifeUp);
     }
 }
