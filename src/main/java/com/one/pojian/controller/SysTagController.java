@@ -7,6 +7,7 @@ import com.one.pojian.service.SysTagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class SysTagController {
     private SysTagService sysTagService;
 
     @RequestMapping("/getTag")
-    public Result getTag(String type, String name) {
+    public Result getTag(@RequestParam(name = "type") String type, @RequestParam(name = "name") String name) {
         List<SysTag> sysTagList = sysTagService.getTag(type, name);
         return Result.success(sysTagList);
     }

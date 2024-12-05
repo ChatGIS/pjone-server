@@ -62,7 +62,7 @@
     </select>
     <select id="getSayingTags" resultType="com.one.pojian.entity.dto.SayingDTO">
         SELECT
-            s.id, s.name, s.author, s.book, s.article, s.create_date, s.modifier_date,
+            s.id, s.name, s.author, s.book, s.article, s.comment, s.create_date, s.modifier_date,
             GROUP_CONCAT(DISTINCT st.id ORDER BY st.id SEPARATOR ',') AS tagIds,
             GROUP_CONCAT(DISTINCT st.name ORDER BY st.name SEPARATOR ',') AS tagNames
         FROM

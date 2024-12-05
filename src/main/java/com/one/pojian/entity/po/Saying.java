@@ -19,5 +19,6 @@ public class Saying {
     private String author;
     private String book;
     private String article;
+    private String comment;
     private Date createDate;
 }
