@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -57,5 +59,18 @@ public class LifeSitServiceImpl extends ServiceImpl<LifeSitMapper, LifeSit> impl
         queryWrapper.eq("do_date", LocalDate.now());
         LifeUp lifeUp = lifeUpMapper.selectOne(queryWrapper);
         return lifeUp;
+    }
+    @Override
+    public List<List<Object>> getCountEveryDay() {
+        List<List<Object>> listList = new ArrayList<>();
+        List<HashMap> listMap = lifeSitMapper.getCountEveryDay();
+        for (HashMap<String, Object> map : listMap) {
+            List<Object> values = new ArrayList<>();
+            for (Object value : map.values()) {
+                values.add(value);
+            }
+            listList.add(values);
+        }
+        return listList;
     }
 }
