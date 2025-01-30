@@ -61,9 +61,9 @@ public class LifeSitServiceImpl extends ServiceImpl<LifeSitMapper, LifeSit> impl
         return lifeUp;
     }
     @Override
-    public List<List<Object>> getCountEveryDay() {
+    public List<List<Object>> getCountEveryDayOfUp() {
         List<List<Object>> listList = new ArrayList<>();
-        List<HashMap> listMap = lifeSitMapper.getCountEveryDay();
+        List<HashMap> listMap = lifeSitMapper.getCountEveryDayOfUp();
         for (HashMap<String, Object> map : listMap) {
             List<Object> values = new ArrayList<>();
             for (Object value : map.values()) {

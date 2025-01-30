@@ -39,9 +39,9 @@ public class LifeSitController {
         LifeUp lifeUp = lifeSitService.getUp();
         return Result.success(lifeUp);
     }
-    @RequestMapping("/getCountEveryDay")
-    public Result getCountEveryDay() {
-        List<List<Object>> lists = lifeSitService.getCountEveryDay();
+    @RequestMapping("/getCountEveryDayOfUp")
+    public Result getCountEveryDayOfUp() {
+        List<List<Object>> lists = lifeSitService.getCountEveryDayOfUp();
         return Result.success(lists);
     }
 }

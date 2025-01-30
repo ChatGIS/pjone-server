@@ -8,10 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface LifeSitMapper extends BaseMapper<LifeSit> {
-    @Select("SELECT a.date, COUNT(a.date) AS count  FROM (" +
-            "SELECT DATE_FORMAT(ls.do_date, '%Y-%m-%d') AS date " +
-            "FROM life_sit ls) a " +
-            "GROUP BY a.date " +
-            "ORDER BY a.date")
-    List<HashMap> getCountEveryDay();
+    @Select("select lu.num as count,  lu.do_date as date from life_up lu order by do_date")
+    List<HashMap> getCountEveryDayOfUp();
 }

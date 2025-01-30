@@ -11,5 +11,5 @@ public interface LifeSitService {
     List<LifeSit> getSits(LocalDateTime localDateTime);
     Integer addUp();
     LifeUp getUp();
-    List<List<Object>> getCountEveryDay();
+    List<List<Object>> getCountEveryDayOfUp();
 }
