@@ -17,10 +17,8 @@
         CASE
         WHEN (lc.time_point  &lt;= '22:00:00' and lc.time_point > '12:00:00') THEN '&lt;10'
         WHEN (lc.time_point  &lt;= '23:00:00' and lc.time_point > '22:00:00') THEN '10-11'
-        WHEN (lc.time_point  &lt;= '23:30:00' and lc.time_point > '23:00:00') THEN '11-11.5'
-        WHEN (lc.time_point  &lt;= '24:00:00' and lc.time_point > '23:30:00') THEN '11.5-12'
-        WHEN (lc.time_point  &lt;= '01:00:00' and lc.time_point > '00:00:00') THEN '12-1'
-        ELSE '&gt;1'
+        WHEN (lc.time_point  &lt;= '24:00:00' and lc.time_point > '23:00:00') THEN '11-12'
+        ELSE '&gt;24'
         END AS group_name
         FROM
         life_color lc
@@ -33,11 +31,10 @@
             (SELECT
             CASE
             WHEN lc.minute  &lt;= 360 THEN '&lt;6h'
-            WHEN lc.minute  > 360 and lc.minute &lt;= 390 THEN '6-6.5h'
-            WHEN lc.minute  > 390 and lc.minute &lt;= 420 THEN '6.5-7h'
-            WHEN lc.minute  > 420 and lc.minute &lt;= 450 THEN '7-7.5h'
-            WHEN lc.minute  > 450 and lc.minute &lt;= 480 THEN '7.5-8h'
-            ELSE '&gt;8h'
+            WHEN lc.minute  > 360 and lc.minute &lt;= 420 THEN '6-7h'
+            WHEN lc.minute  > 420 and lc.minute &lt;= 480 THEN '7-8h'
+            WHEN lc.minute  > 480 and lc.minute &lt;= 540 THEN '8-9h'
+            ELSE '&gt;9h'
             END AS group_name
             FROM
             life_color lc

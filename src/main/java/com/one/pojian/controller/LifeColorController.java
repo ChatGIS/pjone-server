@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.one.pojian.entity.base.Result;
 import com.one.pojian.entity.po.LifeColor;
 import com.one.pojian.service.LifeColorService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,12 +58,12 @@ public class LifeColorController {
         return Result.success(records);
     }
     @RequestMapping("getSleepPointGroup")
-    public Result getSleepPointGroup(Integer num) {
+    public Result getSleepPointGroup(@RequestParam("num") Integer num) {
         List<HashMap> list = lifeColorService.getSleepPointGroup(num);
         return Result.success(list);
     };
     @RequestMapping("/getSleepLongGroup")
-    public Result getSleepLongGroup(Integer num, String unit) {
+    public Result getSleepLongGroup(@RequestParam("num") Integer num, String unit) {
         List<HashMap> list = lifeColorService.getSleepLongGroup(num);
         return Result.success(list);
     };
