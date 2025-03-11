@@ -29,6 +29,11 @@ public class LifeSitController {
         List<LifeSit> sits = lifeSitService.getSits(lifeSit.getDoDate());
         return  Result.success(sits);
     }
+    @RequestMapping("/updateStatus")
+    public Result updateStatus(@RequestBody LifeSit lifeSit) {
+        Integer num = lifeSitService.updateStatus(lifeSit);
+        return  Result.success(num == 1);
+    }
     @RequestMapping("/addUp")
     public Result addUp() {
         Integer num = lifeSitService.addUp();

@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface LifeSitService {
     Integer addSit(LifeSit lifeSit);
+    Integer updateStatus(LifeSit lifeSit);
     List<LifeSit> getSits(LocalDateTime localDateTime);
     Integer addUp();
     LifeUp getUp();

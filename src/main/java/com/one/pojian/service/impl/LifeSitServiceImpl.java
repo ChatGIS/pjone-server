@@ -33,6 +33,10 @@ public class LifeSitServiceImpl extends ServiceImpl<LifeSitMapper, LifeSit> impl
         sit.setDoDate(LocalDateTime.now());
         return lifeSitMapper.insert(sit);
     }
+    public Integer updateStatus(LifeSit sit) {
+        sit.setDoDate(sit.getDoDate().plusHours(8));
+        return lifeSitMapper.updateById(sit);
+    }
     public List<LifeSit> getSits(LocalDateTime currentTime) {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.gt("do_date", currentTime.toLocalDate());
