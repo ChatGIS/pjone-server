@@ -24,4 +24,5 @@ public class LifeColor {
     private Integer minute;
     private Date doDate;
     private Time timePoint;
+    private Integer reason;
 }
