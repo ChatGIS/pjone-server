@@ -17,9 +17,7 @@ import java.util.List;
 /**
  * @author ：ChatGIS
  * @date ：Created in 2024/4/2 2:02
- * @description：
- * @modified By：
- * @version: $
+ * @description：Color相关
  */
 @RestController
 @RequestMapping("/lifeColor")
