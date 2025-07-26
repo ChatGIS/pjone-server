@@ -29,7 +29,11 @@ public class LifeColorServiceImpl extends ServiceImpl<LifeColorMapper, LifeColor
         String type = (String) params.getOrDefault("type", "");
         QueryWrapper<LifeColor> queryWrapper = new QueryWrapper<>();
         if(type != null && !type.trim().isEmpty()) {
-            queryWrapper.eq("type", type);
+            if ("Y".equals(type)) {
+                queryWrapper.likeRight("type", type);
+            } else {
+                queryWrapper.eq("type", type);
+            }
         }
         queryWrapper.orderByDesc("id");
         IPage<LifeColor> lifeColorIPage = new Page<>(current, size);
@@ -62,11 +66,14 @@ public class LifeColorServiceImpl extends ServiceImpl<LifeColorMapper, LifeColor
     public List<List> listRecordNum(String type) {
         List records = new ArrayList<>();
         QueryWrapper<LifeColor> queryWrapper = new QueryWrapper<>();
-        if (!type.equals("Y")) {
-            queryWrapper.eq("type", type);
+        if (type.equals("YM")) {
+            queryWrapper.likeRight("type", "YM");
+        } else if (type.equals("Y")) {
+            queryWrapper.eq("type", "YY").or().eq(("type"), "YN");
         } else {
             // queryWrapper.and(i -> i.ne("type", "R").ne("type", "G"));
-            queryWrapper.likeRight("type", "Y").ne("type", "YH");
+            //  queryWrapper.likeRight("type", "Y").ne("type", "YH");
+            queryWrapper.eq("type", type);
         }
         queryWrapper.select("do_date", "Sum(minute) as totalMinute")
                 .groupBy("do_date");
