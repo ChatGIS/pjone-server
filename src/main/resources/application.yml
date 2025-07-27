@@ -1,14 +1,18 @@
 server:
-  port: 1304
+  port: 13041
   servlet:
     context-path: /pjone-server
 #数据库配置
 spring:
+  profiles:
+    active: private
+  # 本地创建application-private.yml文件，用于存放数据库等敏感配置。
+  # 项目启动时，会自动合并 application.yml 和 application-private.yml 的配置（若有重复配置，application-private.yml 的配置会覆盖主配置）
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/dbname?serverTimezone=Asia/Shanghai
-    username: username
-    password: password
+    username: name
+    password: pw
 # Mybatis Plus打印日志
 mybatis-plus:
   configuration:
